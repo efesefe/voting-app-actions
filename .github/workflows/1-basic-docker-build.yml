@@ -3,9 +3,9 @@ jobs:
     build:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@main
             - shell: bash
               run: echo "beginning"
             - name: build-seed-data
-              working-directory: ../seed-data
+              working-directory: ./seed-data
               run: pwd
