@@ -7,4 +7,5 @@ jobs:
             - shell: bash
               run: echo "beginning"
             - name: build-seed-data
+              working-directory: ../seed-data
               run: pwd
