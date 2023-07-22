@@ -3,8 +3,8 @@ jobs:
     build:
         runs-on: ubuntu-latest
         steps:
+            - uses: actions/checkout@v3
             - shell: bash
-              run: |
-                echo "beginning"
+              run: echo "beginning"
             - name: build-seed-data
               run: pwd
