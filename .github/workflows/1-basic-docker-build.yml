@@ -7,4 +7,4 @@ jobs:
               run: |
                 echo "beginning"
             - name: build-seed-data
-              run: ls | docker build -t seed-data .
+              run: pwd
