@@ -1,0 +1,11 @@
+on: push
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - shell: bash
+              run: |
+                echo "beginning" |
+            - name: build-seed-data
+              working-directory: ./seed-data
+              run: docker build -t seed-data .
