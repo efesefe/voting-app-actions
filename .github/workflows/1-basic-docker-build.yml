@@ -7,5 +7,4 @@ jobs:
               run: |
                 echo "beginning"
             - name: build-seed-data
-              working-directory: ../../seed-data
-              run: docker build -t seed-data .
+              run: ls | docker build -t seed-data .
