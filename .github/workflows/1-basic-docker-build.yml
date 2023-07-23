@@ -4,9 +4,9 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: checkout
-            - uses: actions/checkout@v3
+              uses: actions/checkout@v3
             - name: starting build stage
-            - shell: bash
+              shell: bash
               run: echo "beginning"
             - name: build-seed-data
               working-directory: ./seed-data
