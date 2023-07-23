@@ -17,12 +17,27 @@ jobs:
               uses: docker/setup-buildx-action@v2
             - name: Set up QEMU
               uses: docker/setup-qemu-action@v2
+            - name: Docker meta
+              id: meta
+              uses: docker/metadata-action@v4
+              with:
+                images: |
+                    ibrahimefe/worker |
+                    ibrahimefe/vote |
+                    ibrahimefe/seed-data
+                tags: |
+                    type=ref,event=branch
+                    type=ref,event=pr
+                    type=semver,pattern={{version}}
+                    type=semver,pattern={{major}}.{{minor}}
+
             - name: build seed data
               uses: docker/build-push-action@v4
               with:
                 context: "./seed-data"
                 push: ${{ github.event_name != 'pull_request' }}
-                tags: ibrahimefe/seed-data
+                tags: ${{ steps.meta.outputs.tags }}
+                labels: ${{ steps.meta.outputs.labels }}
                 platforms: linux/amd64,linux/arm64, linux/arm/v7
                 cache-from: type=gha
                 cache-to: type=gha,mode=max
@@ -31,7 +46,8 @@ jobs:
               with:
                 context: "./vote"
                 push: ${{ github.event_name != 'pull_request' }}
-                tags: ibrahimefe/vote
+                tags: ${{ steps.meta.outputs.tags }}
+                labels: ${{ steps.meta.outputs.labels }}
                 platforms: linux/amd64,linux/arm64, linux/arm/v7
                 cache-from: type=gha
                 cache-to: type=gha,mode=max
@@ -40,7 +56,8 @@ jobs:
               with:
                 context: "./worker"
                 push: ${{ github.event_name != 'pull_request' }}
-                tags: ibrahimefe/worker
+                tags: ${{ steps.meta.outputs.tags }}
+                labels: ${{ steps.meta.outputs.labels }}
                 platforms: linux/amd64,linux/arm64, linux/arm/v7
                 cache-from: type=gha
                 cache-to: type=gha,mode=max
