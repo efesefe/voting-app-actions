@@ -14,7 +14,7 @@ jobs:
                   username: ${{ secrets.DOCKERHUB_USERNAME }}
                   password: ${{ secrets.DOCKERHUB_TOKEN }}
             - name: build seed data
-              uses: docker/build-push-action@v4
+              uses: docker/build-push-action@v2
               with:
                 context: "./seed-data"
                 push: ${{ github.event_name != 'pull_request' }}
@@ -22,7 +22,7 @@ jobs:
                 cache-from: type=gha
                 cache-to: type=gha,mode=max
             - name: build vote
-              uses: docker/build-push-action@v4
+              uses: docker/build-push-action@v2
               with:
                 context: "./vote"
                 push: ${{ github.event_name != 'pull_request' }}
@@ -30,7 +30,7 @@ jobs:
                 cache-from: type=gha
                 cache-to: type=gha,mode=max
             - name: build worker
-              uses: docker/build-push-action@v4
+              uses: docker/build-push-action@v2
               with:
                 context: "./worker"
                 push: ${{ github.event_name != 'pull_request' }}
