@@ -22,8 +22,8 @@ jobs:
               uses: docker/metadata-action@v4
               with:
                 images: |
-                    ibrahimefe/worker |
-                    ibrahimefe/vote |
+                    ibrahimefe/worker
+                    ibrahimefe/vote
                     ibrahimefe/seed-data
                 tags: |
                     type=ref,event=branch
