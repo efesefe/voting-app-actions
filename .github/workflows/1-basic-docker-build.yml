@@ -8,7 +8,20 @@ jobs:
             - name: starting build stage
               shell: bash
               run: echo "beginning"
-            - name: build-seed-data
+            - name: login to dockerhub
+              uses: docker/login-action@v2
+              with:
+                  username: ${{ secrets.DOCKERHUB_USERNAME }}
+                  password: ${{ secrets.DOCKERHUB_TOKEN }}
+            - name: build seed data
               working-directory: ./seed-data
-              run: echo "Building image" |
-                docker build -t seed-data .
+              run: echo "Building seed data" |
+                   docker build -t seed-data .
+            - name: build vote
+              working-directory: ./vote
+              run: echo "Building vote" |
+                   docker build -t vote .
+            - name: build worker
+              working-directory: ./worker
+              run: echo "Building worker" |
+                   docker build -t worker .
