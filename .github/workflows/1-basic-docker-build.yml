@@ -14,14 +14,18 @@ jobs:
                   username: ${{ secrets.DOCKERHUB_USERNAME }}
                   password: ${{ secrets.DOCKERHUB_TOKEN }}
             - name: build seed data
-              working-directory: ./seed-data
-              run: echo "Building seed data" |
-                   docker build -t seed-data .
+              uses: docker/build-push-action@v4
+              with:
+                context: "./seed-data"
+                tags: ibrahimefe/seed-data
             - name: build vote
-              working-directory: ./vote
-              run: echo "Building vote" |
-                   docker build -t vote .
+              uses: docker/build-push-action@v4
+              with:
+                context: "./vote"
+                tags: ibrahimefe/vote
             - name: build worker
-              working-directory: ./worker
-              run: echo "Building worker" |
-                   docker build -t worker .
+              uses: docker/build-push-action@v4
+              with:
+                context: "./worker"
+                tags: ibrahimefe/worker
+           
