@@ -15,12 +15,15 @@ jobs:
                   password: ${{ secrets.DOCKERHUB_TOKEN }}
             - name: setup buildx
               uses: docker/setup-buildx-action@v2
+            - name: Set up QEMU
+              uses: docker/setup-qemu-action@v2
             - name: build seed data
               uses: docker/build-push-action@v4
               with:
                 context: "./seed-data"
                 push: ${{ github.event_name != 'pull_request' }}
                 tags: ibrahimefe/seed-data
+                platforms: linux/amd64,linux/arm64, linux/arm/v7
                 cache-from: type=gha
                 cache-to: type=gha,mode=max
             - name: build vote
@@ -29,6 +32,7 @@ jobs:
                 context: "./vote"
                 push: ${{ github.event_name != 'pull_request' }}
                 tags: ibrahimefe/vote
+                platforms: linux/amd64,linux/arm64, linux/arm/v7
                 cache-from: type=gha
                 cache-to: type=gha,mode=max
             - name: build worker
@@ -37,6 +41,7 @@ jobs:
                 context: "./worker"
                 push: ${{ github.event_name != 'pull_request' }}
                 tags: ibrahimefe/worker
+                platforms: linux/amd64,linux/arm64, linux/arm/v7
                 cache-from: type=gha
                 cache-to: type=gha,mode=max
            
