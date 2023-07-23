@@ -17,15 +17,18 @@ jobs:
               uses: docker/build-push-action@v4
               with:
                 context: "./seed-data"
+                push: ${{ github.event_name != 'pull_request' }}
                 tags: ibrahimefe/seed-data
             - name: build vote
               uses: docker/build-push-action@v4
               with:
                 context: "./vote"
+                push: ${{ github.event_name != 'pull_request' }}
                 tags: ibrahimefe/vote
             - name: build worker
               uses: docker/build-push-action@v4
               with:
                 context: "./worker"
+                push: ${{ github.event_name != 'pull_request' }}
                 tags: ibrahimefe/worker
            
