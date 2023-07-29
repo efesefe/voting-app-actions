@@ -61,4 +61,14 @@ jobs:
                 platforms: linux/amd64,linux/arm64, linux/arm/v7
                 cache-from: type=gha
                 cache-to: type=gha,mode=max
+            - name: build result
+              uses: docker/build-push-action@v4
+              with:
+                context: "./result"
+                push: ${{ github.event_name != 'pull_request' }}
+                tags: ${{ steps.meta.outputs.tags }}
+                labels: ${{ steps.meta.outputs.labels }}
+                platforms: linux/amd64,linux/arm64, linux/arm/v7
+                cache-from: type=gha
+                cache-to: type=gha,mode=max
            
