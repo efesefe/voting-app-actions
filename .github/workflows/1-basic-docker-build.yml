@@ -38,7 +38,7 @@ jobs:
               uses: docker/build-push-action@v4
               with:
                 context: "./seed-data"
-                push: ${{ github.event_name != 'pull_request' }}
+                push: ${{ github.event_name != 'pull_request'
                 tags: ${{ steps.meta.outputs.tags }}
                 labels: ${{ steps.meta.outputs.labels }}
                 platforms: linux/amd64,linux/arm64, linux/arm/v7
@@ -77,18 +77,18 @@ jobs:
             - name: Find Comment
               uses: peter-evans/find-comment@v2
               id: fc
-              if: ${{ github.event_name == 'pull_request' }}
+              if: github.event_name == 'pull_request'
               with:
                 issue-number: ${{ github.event.pull_request.number }}
                 comment-author: 'github-actions[bot]'
                 body-includes: Image(s) built
             - name: Create or update comment
               uses: peter-evans/create-or-update-comment@v3
-              if: ${{ github.event_name == 'pull_request' }}
+              if: github.event_name == 'pull_request'
               with:
                 comment-id: ${{ steps.fc.outputs.comment-id }}
                 issue-number: ${{ github.event.pull_request.number }}
-                if: ${{ github.event_name == 'pull_request' }}
+                if: github.event_name == 'pull_request'
                 body: |
                   Image tag(s) pushed
                   ```text
