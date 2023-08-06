@@ -23,6 +23,55 @@ jobs:
               uses: docker/setup-buildx-action@v2
             - name: Set up QEMU
               uses: docker/setup-qemu-action@v2
+
+            - name: build seed data
+              uses: docker/build-push-action@v4
+              with:
+                context: "./seed-data"
+                push: false
+                load: true
+                tags: ${{ steps.meta.outputs.tags }}
+                labels: ${{ steps.meta.outputs.labels }}
+                platforms: linux/amd64,linux/arm64, linux/arm/v7
+                cache-from: type=gha
+                cache-to: type=gha,mode=max
+            - name: build vote
+              uses: docker/build-push-action@v4
+              with:
+                context: "./vote"
+                push: false
+                load: true
+                tags: ${{ steps.meta.outputs.tags }}
+                labels: ${{ steps.meta.outputs.labels }}
+                platforms: linux/amd64,linux/arm64, linux/arm/v7
+                cache-from: type=gha
+                cache-to: type=gha,mode=max
+            - name: build worker
+              uses: docker/build-push-action@v4
+              with:
+                context: "./worker"
+                push: false
+                load: true
+                tags: ${{ steps.meta.outputs.tags }}
+                labels: ${{ steps.meta.outputs.labels }}
+                platforms: linux/amd64,linux/arm64, linux/arm/v7
+                cache-from: type=gha
+                cache-to: type=gha,mode=max
+            - name: build result
+              uses: docker/build-push-action@v4
+              with:
+                context: "./result"
+                push: false
+                load: true
+                tags: ${{ steps.meta.outputs.tags }}
+                labels: ${{ steps.meta.outputs.labels }}
+                platforms: linux/amd64,linux/arm64, linux/arm/v7
+            - name: Run Trivy for all CVEs (non-blocking)
+              uses: aquasecurity/trivy-action@master
+              with:
+                image-ref: ${{ github.run_id }}
+                exit-code: 0
+                format: table
             - name: Docker meta
               id: meta
               uses: docker/metadata-action@v4
@@ -33,16 +82,13 @@ jobs:
                     ibrahimefe/seed-data
                     ibrahimefe/result
                 tags: |
-                    type=raw,value=latest,enable=${{ endsWith(github.ref, github.event.repository.default_branch) }}
-                    type=ref,event=pr
-                    type=semver,pattern={{version}}
-                    type=semver,pattern={{major}}.{{minor}}
-
+                    type=raw,value=04
             - name: build seed data
               uses: docker/build-push-action@v4
               with:
                 context: "./seed-data"
-                push: true
+                push: false
+                load: true
                 tags: ${{ steps.meta.outputs.tags }}
                 labels: ${{ steps.meta.outputs.labels }}
                 platforms: linux/amd64,linux/arm64, linux/arm/v7
@@ -98,7 +144,3 @@ jobs:
                   ```
                   Labels added:
                   ```text
-                  ${{ steps.meta.outputs.labels }}
-                  ```
-                edit-mode: replace
-
