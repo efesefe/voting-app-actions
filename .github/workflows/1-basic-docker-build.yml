@@ -38,15 +38,45 @@ jobs:
                     type=semver,pattern={{version}}
                     type=semver,pattern={{major}}.{{minor}}
 
-            - name: Build images
+            - name: build seed data
               uses: docker/build-push-action@v4
               with:
+                context: "./seed-data"
                 push: true
                 tags: ${{ steps.meta.outputs.tags }}
                 labels: ${{ steps.meta.outputs.labels }}
                 platforms: linux/amd64,linux/arm64, linux/arm/v7
                 cache-from: type=gha
                 cache-to: type=gha,mode=max
+            - name: build vote
+              uses: docker/build-push-action@v4
+              with:
+                context: "./vote"
+                push: true
+                tags: ${{ steps.meta.outputs.tags }}
+                labels: ${{ steps.meta.outputs.labels }}
+                platforms: linux/amd64,linux/arm64, linux/arm/v7
+                cache-from: type=gha
+                cache-to: type=gha,mode=max
+            - name: build worker
+              uses: docker/build-push-action@v4
+              with:
+                context: "./worker"
+                push: true
+                tags: ${{ steps.meta.outputs.tags }}
+                labels: ${{ steps.meta.outputs.labels }}
+                platforms: linux/amd64,linux/arm64, linux/arm/v7
+                cache-from: type=gha
+                cache-to: type=gha,mode=max
+            - name: build result
+              uses: docker/build-push-action@v4
+              with:
+                context: "./result"
+                push: true
+                tags: ${{ steps.meta.outputs.tags }}
+                labels: ${{ steps.meta.outputs.labels }}
+                platforms: linux/amd64,linux/arm64, linux/arm/v7
+
             - name: Find Comment
               uses: peter-evans/find-comment@v2
               if: ${{ github.event_name == 'pull_request' }}
