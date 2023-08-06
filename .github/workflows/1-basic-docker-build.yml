@@ -88,7 +88,6 @@ jobs:
               with:
                 comment-id: ${{ steps.fc.outputs.comment-id }}
                 issue-number: ${{ github.event.pull_request.number }}
-                if: github.event_name == 'pull_request'
                 body: |
                   Image tag(s) pushed
                   ```text
