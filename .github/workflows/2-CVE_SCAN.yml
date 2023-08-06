@@ -30,8 +30,9 @@ jobs:
                 context: "./seed-data"
                 push: false
                 load: true
-                tags: ${{ steps.meta.outputs.tags }}
+                tags: ${{ github.run_id }}
                 labels: ${{ steps.meta.outputs.labels }}
+                target: test
                 platforms: linux/amd64,linux/arm64, linux/arm/v7
                 cache-from: type=gha
                 cache-to: type=gha,mode=max
@@ -39,10 +40,9 @@ jobs:
               uses: docker/build-push-action@v4
               with:
                 context: "./vote"
-                push: false
-                load: true
-                tags: ${{ steps.meta.outputs.tags }}
+                tags: ${{ github.run_id }}
                 labels: ${{ steps.meta.outputs.labels }}
+                target: test
                 platforms: linux/amd64,linux/arm64, linux/arm/v7
                 cache-from: type=gha
                 cache-to: type=gha,mode=max
@@ -52,8 +52,9 @@ jobs:
                 context: "./worker"
                 push: false
                 load: true
-                tags: ${{ steps.meta.outputs.tags }}
+                tags: ${{ github.run_id }}
                 labels: ${{ steps.meta.outputs.labels }}
+                target: test
                 platforms: linux/amd64,linux/arm64, linux/arm/v7
                 cache-from: type=gha
                 cache-to: type=gha,mode=max
@@ -63,8 +64,9 @@ jobs:
                 context: "./result"
                 push: false
                 load: true
-                tags: ${{ steps.meta.outputs.tags }}
+                tags: ${{ github.run_id }}
                 labels: ${{ steps.meta.outputs.labels }}
+                target: test
                 platforms: linux/amd64,linux/arm64, linux/arm/v7
             - name: Run Trivy for all CVEs (non-blocking)
               uses: aquasecurity/trivy-action@master
