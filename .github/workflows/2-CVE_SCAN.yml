@@ -33,7 +33,7 @@ jobs:
                 tags: ${{ github.run_id }}
                 labels: ${{ steps.meta.outputs.labels }}
                 target: test
-                platforms: linux/amd64,linux/arm64, linux/arm/v7
+                platforms: linux/amd64
                 cache-from: type=gha
                 cache-to: type=gha,mode=max
             - name: build vote
@@ -43,7 +43,7 @@ jobs:
                 tags: ${{ github.run_id }}
                 labels: ${{ steps.meta.outputs.labels }}
                 target: test
-                platforms: linux/amd64,linux/arm64, linux/arm/v7
+                platforms: linux/amd64
                 cache-from: type=gha
                 cache-to: type=gha,mode=max
             - name: build worker
@@ -55,7 +55,7 @@ jobs:
                 tags: ${{ github.run_id }}
                 labels: ${{ steps.meta.outputs.labels }}
                 target: test
-                platforms: linux/amd64,linux/arm64, linux/arm/v7
+                platforms: linux/amd64
                 cache-from: type=gha
                 cache-to: type=gha,mode=max
             - name: build result
@@ -67,7 +67,7 @@ jobs:
                 tags: ${{ github.run_id }}
                 labels: ${{ steps.meta.outputs.labels }}
                 target: test
-                platforms: linux/amd64,linux/arm64, linux/arm/v7
+                platforms: linux/amd64
             - name: Run Trivy for all CVEs (non-blocking)
               uses: aquasecurity/trivy-action@master
               with:
@@ -84,7 +84,7 @@ jobs:
                     ibrahimefe/seed-data
                     ibrahimefe/result
                 tags: |
-                    type=raw,value=04
+                    type=raw,value=02
             - name: build seed data
               uses: docker/build-push-action@v4
               with:
