@@ -76,8 +76,8 @@ jobs:
                 cache-to: type=gha,mode=max
             - name: Find Comment
               uses: peter-evans/find-comment@v2
-              id: fc
               if: github.event_name == 'pull_request'
+              id: fc
               with:
                 issue-number: ${{ github.event.pull_request.number }}
                 comment-author: 'github-actions[bot]'
