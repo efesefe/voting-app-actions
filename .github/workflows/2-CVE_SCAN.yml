@@ -9,6 +9,8 @@ jobs:
             pull-requests: write
         runs-on: ubuntu-latest
         steps:
+            - name: checkout
+              uses: actions/checkout@v3
             - name: starting build stage
               shell: bash
               run: echo "beginning"
@@ -37,9 +39,9 @@ jobs:
             - name: build vote
               uses: docker/build-push-action@v4
               with:
+                context: "./vote"
                 push: false
                 load: true
-                context: "./vote"
                 tags: ${{ github.run_id }}
                 labels: ${{ steps.meta.outputs.labels }}
                 target: test
