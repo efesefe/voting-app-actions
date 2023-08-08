@@ -25,7 +25,7 @@ jobs:
             - name: build seed data
               uses: docker/build-push-action@v4
               with:
-                context: seed-data
+                context: ../../seed-data
                 push: false
                 load: true
                 tags: ${{ github.run_id }}
@@ -36,7 +36,7 @@ jobs:
             - name: build vote
               uses: docker/build-push-action@v4
               with:
-                context: vote
+                context: ../../vote
                 push: false
                 load: true
                 tags: ${{ github.run_id }}
@@ -47,7 +47,7 @@ jobs:
             - name: build worker
               uses: docker/build-push-action@v4
               with:
-                context: worker
+                context: ../../worker
                 push: false
                 load: true
                 tags: ${{ github.run_id }}
@@ -58,7 +58,7 @@ jobs:
             - name: build result
               uses: docker/build-push-action@v4
               with:
-                context: result
+                context: ../../result
                 push: false
                 load: true
                 tags: ${{ github.run_id }}
@@ -84,7 +84,7 @@ jobs:
             - name: build seed data
               uses: docker/build-push-action@v4
               with:
-                context: seed-data
+                context: ../../seed-data
                 push: true
                 tags: ${{ steps.meta.outputs.tags }}
                 labels: ${{ steps.meta.outputs.labels }}
@@ -94,7 +94,7 @@ jobs:
             - name: build vote
               uses: docker/build-push-action@v4
               with:
-                context: vote
+                context: ../../vote
                 push: true
                 tags: ${{ steps.meta.outputs.tags }}
                 labels: ${{ steps.meta.outputs.labels }}
@@ -104,7 +104,7 @@ jobs:
             - name: build worker
               uses: docker/build-push-action@v4
               with:
-                context: worker
+                context: ../../worker
                 push: true
                 tags: ${{ steps.meta.outputs.tags }}
                 labels: ${{ steps.meta.outputs.labels }}
@@ -114,7 +114,7 @@ jobs:
             - name: build result
               uses: docker/build-push-action@v4
               with:
-                context: result
+                context: ../../result
                 push: true
                 tags: ${{ steps.meta.outputs.tags }}
                 labels: ${{ steps.meta.outputs.labels }}
