@@ -9,8 +9,6 @@ jobs:
             pull-requests: write
         runs-on: ubuntu-latest
         steps:
-            - name: checkout
-              uses: actions/checkout@v3
             - name: starting build stage
               shell: bash
               run: echo "beginning"
@@ -27,7 +25,7 @@ jobs:
             - name: build seed data
               uses: docker/build-push-action@v4
               with:
-                context: "./seed-data"
+                context: seed-data
                 push: false
                 load: true
                 tags: ${{ github.run_id }}
@@ -38,7 +36,7 @@ jobs:
             - name: build vote
               uses: docker/build-push-action@v4
               with:
-                context: "./vote"
+                context: vote
                 push: false
                 load: true
                 tags: ${{ github.run_id }}
@@ -49,7 +47,7 @@ jobs:
             - name: build worker
               uses: docker/build-push-action@v4
               with:
-                context: "./worker"
+                context: worker
                 push: false
                 load: true
                 tags: ${{ github.run_id }}
@@ -60,7 +58,7 @@ jobs:
             - name: build result
               uses: docker/build-push-action@v4
               with:
-                context: "./result"
+                context: result
                 push: false
                 load: true
                 tags: ${{ github.run_id }}
@@ -86,7 +84,7 @@ jobs:
             - name: build seed data
               uses: docker/build-push-action@v4
               with:
-                context: "./seed-data"
+                context: seed-data
                 push: true
                 tags: ${{ steps.meta.outputs.tags }}
                 labels: ${{ steps.meta.outputs.labels }}
@@ -96,7 +94,7 @@ jobs:
             - name: build vote
               uses: docker/build-push-action@v4
               with:
-                context: "./vote"
+                context: vote
                 push: true
                 tags: ${{ steps.meta.outputs.tags }}
                 labels: ${{ steps.meta.outputs.labels }}
@@ -106,7 +104,7 @@ jobs:
             - name: build worker
               uses: docker/build-push-action@v4
               with:
-                context: "./worker"
+                context: worker
                 push: true
                 tags: ${{ steps.meta.outputs.tags }}
                 labels: ${{ steps.meta.outputs.labels }}
@@ -116,30 +114,8 @@ jobs:
             - name: build result
               uses: docker/build-push-action@v4
               with:
-                context: "./result"
+                context: result
                 push: true
                 tags: ${{ steps.meta.outputs.tags }}
                 labels: ${{ steps.meta.outputs.labels }}
                 platforms: linux/amd64,linux/arm64, linux/arm/v7
-
-            - name: Find Comment
-              uses: peter-evans/find-comment@v2
-              if: ${{ github.event_name == 'pull_request' }}
-              id: fc
-              with:
-                issue-number: ${{ github.event.pull_request.number }}
-                comment-author: 'github-actions[bot]'
-                body-includes: Image(s) built
-            - name: Create or update comment
-              uses: peter-evans/create-or-update-comment@v3
-              if: ${{ github.event_name == 'pull_request' }}
-              with:
-                comment-id: ${{ steps.fc.outputs.comment-id }}
-                issue-number: ${{ github.event.pull_request.number }}
-                body: |
-                  Image tag(s) pushed
-                  ```text
-                  ${{ steps.meta.outputs.tags }}
-                  ```
-                  Labels added:
-                  ```text
