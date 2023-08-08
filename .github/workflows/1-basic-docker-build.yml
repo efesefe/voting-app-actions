@@ -1,3 +1,5 @@
+name: build and push docker images in the registry
+
 on:
     push:
         branches:
