@@ -1,5 +1,4 @@
----
-name: 07 Build and Scan + Report
+name: Build and Scan + Report blockint
 
 on:
   push:
@@ -120,7 +119,7 @@ jobs:
                 ibrahimefe/seed-data
                 ibrahimefe/result
             tags: |
-                type=raw,value=03
+                type=raw,value=04
         - name: build seed data
           uses: docker/build-push-action@v4
           with:
