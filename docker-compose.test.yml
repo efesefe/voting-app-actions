@@ -17,7 +17,7 @@ services:
       - back-tier
 
   result:
-    build: ${RESULT_IMAGE}
+    image: ${RESULT_IMAGE}
     # use nodemon rather than node for local dev
     command: nodemon server.js
     depends_on:
@@ -33,7 +33,7 @@ services:
       - back-tier
 
   worker:
-    build:
+    image:
       context: ${WORKER_IMAGE}
     depends_on:
       redis:
