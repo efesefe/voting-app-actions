@@ -30,54 +30,50 @@ jobs:
                 context: "./seed-data"
                 push: false
                 load: true
-                tags: ${{ steps.meta.outputs.tags }}
-                labels: ${{ steps.meta.outputs.labels }}
+                tags: ${{ github.run_id }}/seed-data
                 platforms: linux/amd64
                 cache-from: type=gha
                 cache-to: type=gha,mode=max
             - name: seed-date unit tests
               run: |
-                docker run --rm ${{ github.run_id }} echo "running unit tests for seed-data"
+                docker run --rm ${{ github.run_id }}/seed-data echo "running unit tests for seed-data"
             - name: build vote
               uses: docker/build-push-action@v4
               with:
                 context: "./vote"
                 push: false
                 load: true
-                tags: ${{ steps.meta.outputs.tags }}
-                labels: ${{ steps.meta.outputs.labels }}
+                tags: ${{ github.run_id }}/vote
                 platforms: linux/amd64
                 cache-from: type=gha
                 cache-to: type=gha,mode=max
             - name: vote unit tests
               run: |
-                docker run --rm ${{ github.run_id }} echo "running unit tests for vote"
+                docker run --rm ${{ github.run_id }}/vote echo "running unit tests for vote"
             - name: build worker
               uses: docker/build-push-action@v4
               with:
                 context: "./worker"
                 push: false
                 load: true
-                tags: ${{ steps.meta.outputs.tags }}
-                labels: ${{ steps.meta.outputs.labels }}
+                tags: ${{ github.run_id }}/worker
                 platforms: linux/amd64
                 cache-from: type=gha
                 cache-to: type=gha,mode=max
             - name: worker unit tests
               run: |
-                docker run --rm ${{ github.run_id }} echo "running unit tests for worker"
+                docker run --rm ${{ github.run_id }}/worker echo "running unit tests for worker"
             - name: build result
               uses: docker/build-push-action@v4
               with:
                 context: "./result"
                 push: false
                 load: true
-                tags: ${{ steps.meta.outputs.tags }}
-                labels: ${{ steps.meta.outputs.labels }}
+                tags: ${{ github.run_id }}/result
                 platforms: linux/amd64
             - name: result unit tests
               run: |
-                docker run --rm ${{ github.run_id }} echo "running unit tests for result"
+                docker run --rm ${{ github.run_id }}/result echo "running unit tests for result"
             - name: Docker meta
               id: meta
               uses: docker/metadata-action@v4
